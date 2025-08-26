@@ -1,0 +1,84 @@
+name: Need for Speed Most Wanted (2005)
+game_slug: need-for-speed-most-wanted
+slug: need-for-speed-most-wanted
+version: Custom 7z Archive with LAN and Fixes
+description: Installs Need for Speed Most Wanted (2005) from a 7z archive with widescreen, controller support, no-CD patch, ExOpts, Unlimiter, and MostWantedMultiplayerFix for LAN. Includes DirectX, Visual C++ runtimes, DXVK, XAudio, and Windows XP compatibility. Optional GameRanger for LAN fallback.
+notes: |
+  LAN play is limited to 4 players; no known patch supports more.
+  Select no-CD patch (.exe) locally. If game7z download fails, manually download from:
+  https://www.mediafire.com/file/xw1upc654akw6gm/NfSMW.7z/file
+  or set 'game7z' manually. Vulkan drivers required for DXVK.
+  For GameRanger, install via Wine and host/join games (https://www.gameranger.com).
+
+runner: wine
+
+script:
+  files:
+    - game7z: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005-/releases/download/v1/NfSMW.7z
+    - nocd_patch: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005-/releases/download/v1/NO-CD.patch.exe
+    - retouch: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005-/releases/download/v1/Retouch.Graphics.v9.1.rar
+    - extraOptions: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005-/releases/download/v1/NFSMW.ExOpts.v10.0.1.1337.zip
+    - unlimiter: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005-/releases/download/v1/NFSMW.Unlimiter.zip
+    - multiplayerfix: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005-/releases/download/v1/MostWantedMultiplayerFix.asi
+
+  game:
+    arch: win32
+    exe: "drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/speed.exe"
+    prefix: "$GAMEDIR"
+
+  installer:
+    - task:
+        name: create_prefix
+        arch: win32
+        prefix: "$GAMEDIR"
+    - execute:
+        command: mkdir -p "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
+        description: Creating game directory
+    - task:
+        name: winetricks
+        app: winxp
+        description: Setting Windows XP compatibility
+    - task:
+        name: winetricks
+        app: d3dx9 vcrun2005 xact
+        description: Installing DirectX 9, Visual C++ 2005, and XAudio
+    - task:
+        name: winetricks
+        app: dxvk
+        description: Installing DXVK for Vulkan rendering
+    - extract:
+        file: game7z
+        dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
+        format: 7z
+        description: Extracting game archive
+    - task:
+        name: wineexec
+        executable: nocd_patch
+        prefix: "$GAMEDIR"
+        description: Applying no-CD patch
+    - extract:
+        file: retouch
+        dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
+        format: rar
+        description: Applying Retouch Graphics v9.1 mod
+    - extract:
+        file: extraOptions
+        dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
+        format: zip
+        description: Applying NFSMW ExOpts mod
+    - extract:
+        file: unlimiter
+        dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
+        format: zip
+        description: Applying NFSMW Unlimiter mod
+    - copy:
+        src: multiplayerfix
+        dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/scripts"
+        description: Installing MostWantedMultiplayerFix for LAN stability
+
+  wine:
+    overrides:
+      dinput8: n,b
+      wsock32: n,b
+    dxvk: true
+    vsync: true
