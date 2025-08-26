@@ -25,7 +25,10 @@ script:
     arch: win32
     exe: "drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/speed.exe"
     prefix: "$GAMEDIR"
-
+  wine:
+    dxvk: "1.10.3"
+    esync: true
+    fsync: false
   installer:
     - task:
         name: create_prefix
