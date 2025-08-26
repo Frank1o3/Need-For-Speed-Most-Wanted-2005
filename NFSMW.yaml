@@ -51,11 +51,6 @@ script:
         dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
         format: 7z
         description: Extracting game archive
-    - task:
-        name: wineexec
-        executable: nocd_patch
-        prefix: "$GAMEDIR"
-        description: Applying no-CD patch
     - extract:
         file: retouch
         dst: "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted"
