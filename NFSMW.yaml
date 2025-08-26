@@ -16,7 +16,7 @@ script:
   files:
     - game7z: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/NfSMW.7z
     - nocd_patch: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/NO-CD.patch.exe
-    - retouch: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/Retouch.Graphics.v9.1.rar
+    - retouch: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/Retouch.Graphics.v9.1.zip
     - extraOptions: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/NFSMW.ExOpts.v10.0.1.1337.zip
     - unlimiter: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/NFSMW.Unlimiter.zip
     - multiplayerfix: https://github.com/Frank1o3/Need-For-Speed-Most-Wanted-2005/releases/download/v1/MostWantedMultiplayerFix.asi
